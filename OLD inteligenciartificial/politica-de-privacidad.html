@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="title">Política de Privacidad | inteligenciartificial.lat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0a0a0a;
+    }
+    .gold-accent { color: #FBBF24; }
+    .prose { color: #D1D5DB; }
+    .prose h1 { color: #F3F4F6; }
+    .prose h2 { color: #E5E7EB; margin-top: 2em; margin-bottom: 1em; }
+    .prose a { color: #FBBF24; }
+    .lang-toggle button:hover, .lang-toggle button.active {
+        color: #FBBF24;
+        font-weight: bold;
+    }
+    .glassmorphism {
+        background: rgba(10, 10, 10, 0.5);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="text-gray-200">
+  <header class="sticky top-0 z-50 glassmorphism">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold tracking-tight"><span class="gold-accent">inteligenciartificial</span>.lat</a>
+      <div class="lang-toggle space-x-3 text-sm font-medium text-gray-400">
+        <button onclick="setLang('es')" class="active">ES</button>
+        <button onclick="setLang('en')">EN</button>
+        <button onclick="setLang('pt')">PT</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto py-16 px-6">
+    <article class="prose prose-xl max-w-4xl mx-auto">
+      <h1 data-key="title_header">Política de Privacidad</h1>
+      <p class="text-gray-400" data-key="last_updated">Última actualización: 13 de Julio de 2025</p>
+      
+      <div data-key="content">
+        <!-- Spanish Content -->
+        <div lang="es">
+          <p>Bienvenido a inteligenciartificial.lat. Respetamos su privacidad y nos comprometemos a proteger sus datos personales. Esta política de privacidad le informará sobre cómo cuidamos sus datos personales cuando visita nuestro sitio web y le informará sobre sus derechos de privacidad y cómo la ley lo protege.</p>
+          <h2>1. Datos que recopilamos sobre usted</h2>
+          <p>Podemos recopilar, usar, almacenar y transferir diferentes tipos de datos personales sobre usted, como Datos de Identidad (nombre, apellido) y Datos de Contacto (dirección de correo electrónico) cuando utiliza nuestro formulario de contacto.</p>
+          <h2>2. Cómo usamos sus datos personales</h2>
+          <p>Solo usaremos sus datos personales cuando la ley nos lo permita. Generalmente, usaremos sus datos personales para responder a las consultas que nos envíe a través de nuestro formulario de contacto.</p>
+        </div>
+        <!-- English Content (hidden by default) -->
+        <div lang="en" style="display:none;">
+          <p>Welcome to inteligenciartificial.lat. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.</p>
+          <h2>1. The data we collect about you</h2>
+          <p>We may collect, use, store and transfer different kinds of personal data about you such as Identity Data (first name, last name) and Contact Data (email address) when you use our contact form.</p>
+          <h2>2. How we use your personal data</h2>
+          <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data to respond to inquiries you send us through our contact form.</p>
+        </div>
+        <!-- Portuguese Content (hidden by default) -->
+        <div lang="pt" style="display:none;">
+          <p>Bem-vindo ao inteligenciartificial.lat. Respeitamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais. Esta política de privacidade irá informá-lo sobre como cuidamos dos seus dados pessoais quando visita o nosso website e informá-lo sobre os seus direitos de privacidade e como a lei o protege.</p>
+          <h2>1. Os dados que coletamos sobre você</h2>
+          <p>Podemos coletar, usar, armazenar e transferir diferentes tipos de dados pessoais sobre você, como Dados de Identidade (nome, sobrenome) e Dados de Contato (endereço de e-mail) quando você usa nosso formulário de contato.</p>
+          <h2>2. Como usamos os seus dados pessoais</h2>
+          <p>Apenas usaremos os seus dados pessoais quando a lei nos permitir. Geralmente, usaremos os seus dados pessoais para responder às perguntas que nos enviar através do nosso formulário de contato.</p>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const translations = {
+      es: { title: "Política de Privacidad | inteligenciartificial.lat", title_header: "Política de Privacidad", last_updated: "Última actualización: 13 de Julio de 2025" },
+      en: { title: "Privacy Policy | inteligenciartificial.lat", title_header: "Privacy Policy", last_updated: "Last updated: July 13, 2025" },
+      pt: { title: "Política de Privacidade | inteligenciartificial.lat", title_header: "Política de Privacidade", last_updated: "Última atualização: 13 de julho de 2025" }
+    };
+
+    function setLang(lang) {
+      const t = translations[lang];
+      for (const key in t) {
+        const el = document.querySelector(`[data-key="${key}"]`);
+        if (el) el.innerHTML = t[key];
+      }
+      
+      document.querySelectorAll('[data-key="content"] > div').forEach(div => {
+        div.style.display = div.getAttribute('lang') === lang ? 'block' : 'none';
+      });
+
+      document.querySelectorAll('.lang-toggle button').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.lang-toggle button[onclick*="'${lang}'"]`).classList.add('active');
+      document.documentElement.lang = lang;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const userLang = navigator.language.substring(0, 2);
+        const supportedLangs = ['es', 'en', 'pt'];
+        if (supportedLangs.includes(userLang)) {
+            setLang(userLang);
+        } else {
+            setLang('es'); // Default
+        }
+    });
+  </script>
+</body>
+</html>

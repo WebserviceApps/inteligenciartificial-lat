@@ -1,0 +1,132 @@
+<!-- 
+  ====================================================================
+  ARCHIVO FINAL: terminos.html (Términos y Condiciones)
+  INSTRUCCIONES: Este archivo está completo y listo para ser subido 
+  a la raíz de su proyecto.
+  ====================================================================
+-->
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones - Inteligencia Artificial LATAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+Pro:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #E0E7FF; }
+        h1, h2 { font-family: 'Source Serif Pro', serif; }
+        .prose { color: #cbd5e1; } /* slate-300 */
+        .prose h1, .prose h2, .prose h3, .prose strong { color: #FFFFFF; }
+        .prose a { color: #60a5fa; } /* blue-400 */
+    </style>
+</head>
+<body class="antialiased">
+    <header class="fixed top-0 left-0 w-full p-4 z-50 bg-slate-950/50 backdrop-blur-sm border-b border-slate-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/index.html" class="text-xl font-bold tracking-tighter text-white hover:opacity-80 transition-opacity">inteligenciartificial.lat</a>
+            <div class="relative">
+                <button id="lang-selector-button" class="flex items-center gap-2 px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-white hover:bg-slate-700/70 transition-colors">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
+                    <span id="current-lang-text">Español</span>
+                </button>
+                <div id="lang-selector-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-lg overflow-hidden">
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="es">Español</a>
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="en">English</a>
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="pt">Português</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="container mx-auto px-6 pt-32 pb-16 lg:pt-40 lg:pb-24">
+        <article class="prose prose-invert lg:prose-xl mx-auto">
+            <h1 data-lang-key="title">Términos y Condiciones</h1>
+            <p data-lang-key="lastUpdated">Última actualización: 20 de Julio de 2025</p>
+            
+            <div data-lang-key="content">
+                <!-- El contenido se inyectará aquí con JavaScript -->
+            </div>
+        </article>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const translations = {
+                es: {
+                    pageTitle: "Términos y Condiciones - Inteligencia Artificial LATAM",
+                    currentLang: "Español",
+                    title: "Términos y Condiciones",
+                    lastUpdated: "Última actualización: 20 de Julio de 2025",
+                    content: `
+                        <p>Bienvenido a inteligenciartificial.lat. Estos términos y condiciones describen las reglas y regulaciones para el uso del sitio web.</p>
+                        <h2>1. Aceptación de los Términos</h2>
+                        <p>Al acceder a este sitio web, asumimos que aceptas estos términos y condiciones. No continúes usando inteligenciartificial.lat si no estás de acuerdo con todos los términos y condiciones establecidos en esta página.</p>
+                        <h2>2. Propiedad Intelectual</h2>
+                        <p>El Sitio y su contenido original, características y funcionalidad son y seguirán siendo propiedad exclusiva de los propietarios del dominio y sus licenciantes. El Sitio está protegido por derechos de autor, marcas registradas y otras leyes tanto de jurisdicciones locales como extranjeras.</p>
+                        <h2>3. Limitación de Responsabilidad</h2>
+                        <p>La información en este sitio web se proporciona "tal cual" sin ninguna representación o garantía, expresa o implícita. No garantizamos que la información en este sitio web sea completa, verdadera, precisa o no engañosa.</p>
+                    `
+                },
+                en: {
+                    pageTitle: "Terms and Conditions - Artificial Intelligence LATAM",
+                    currentLang: "English",
+                    title: "Terms and Conditions",
+                    lastUpdated: "Last updated: July 20, 2025",
+                    content: `
+                        <p>Welcome to inteligenciartificial.lat. These terms and conditions outline the rules and regulations for the use of the website.</p>
+                        <h2>1. Acceptance of Terms</h2>
+                        <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use inteligenciartificial.lat if you do not agree to all of the terms and conditions stated on this page.</p>
+                        <h2>2. Intellectual Property</h2>
+                        <p>The Site and its original content, features, and functionality are and will remain the exclusive property of the domain owners and their licensors. The Site is protected by copyright, trademark, and other laws of both local and foreign jurisdictions.</p>
+                        <h2>3. Limitation of Liability</h2>
+                        <p>The information on this website is provided "as is" without any representations or warranties, express or implied. We do not warrant that the information on this website is complete, true, accurate, or non-misleading.</p>
+                    `
+                },
+                pt: {
+                    pageTitle: "Termos e Condições - Inteligência Artificial LATAM",
+                    currentLang: "Português",
+                    title: "Termos e Condições",
+                    lastUpdated: "Última atualização: 20 de julho de 2025",
+                    content: `
+                        <p>Bem-vindo ao inteligenciartificial.lat. Estes termos e condições descrevem as regras e regulamentos para o uso do site.</p>
+                        <h2>1. Aceitação dos Termos</h2>
+                        <p>Ao acessar este site, presumimos que você aceita estes termos e condições. Não continue a usar inteligenciartificial.lat se não concordar com todos os termos e condições declarados nesta página.</p>
+                        <h2>2. Propriedade Intelectual</h2>
+                        <p>O Site e seu conteúdo original, recursos e funcionalidade são e permanecerão propriedade exclusiva dos proprietários do domínio e seus licenciadores. O Site é protegido por direitos autorais, marcas registradas e outras leis de jurisdições locais e estrangeiras.</p>
+                        <h2>3. Limitação de Responsabilidade</h2>
+                        <p>A informação neste site é fornecida "como está", sem quaisquer representações ou garantias, expressas ou implícitas. Não garantimos que a informação neste site seja completa, verdadeira, precisa ou não enganosa.</p>
+                    `
+                }
+            };
+
+            const langSelectorButton = document.getElementById('lang-selector-button');
+            const langSelectorDropdown = document.getElementById('lang-selector-dropdown');
+            const currentLangText = document.getElementById('current-lang-text');
+
+            const setLanguage = (lang) => {
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (translations[lang] && translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                document.documentElement.lang = lang;
+                document.title = translations[lang].pageTitle;
+                currentLangText.innerText = translations[lang].currentLang;
+                langSelectorDropdown.classList.add('hidden');
+            };
+
+            langSelectorButton.addEventListener('click', () => langSelectorDropdown.classList.toggle('hidden'));
+            document.querySelectorAll('.lang-option').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLanguage(e.target.dataset.lang);
+                });
+            });
+            setLanguage('es');
+        });
+    </script>
+</body>
+</html>

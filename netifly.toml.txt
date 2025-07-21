@@ -9,3 +9,18 @@
 [functions]
   # El directorio donde Netlify buscará tus funciones
   directory = "netlify/functions/"
+
+# netlify.toml
+
+[build]
+  publish = "/" 
+
+[functions]
+  directory = "netlify/functions/"
+
+# [[ REDIRECCIÓN PARA FORZAR HTTPS ]]
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true

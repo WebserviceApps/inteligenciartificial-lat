@@ -1,26 +1,9 @@
-# netlify.toml
+# Archivo de configuración para Netlify
 
 [build]
-  # El comando que usas para construir tu sitio (si aplica)
-  # command = "npm run build"
-  # La carpeta que se despliega (donde está tu index.html)
-  publish = "/" 
+  # Directorio donde se encuentran las funciones serverless.
+  functions = "netlify/functions/"
 
 [functions]
-  # El directorio donde Netlify buscará tus funciones
-  directory = "netlify/functions/"
-
-# netlify.toml
-
-[build]
-  publish = "/" 
-
-[functions]
-  directory = "netlify/functions/"
-
-# [[ REDIRECCIÓN PARA FORZAR HTTPS ]]
-[[redirects]]
-  from = "http://*"
-  to = "https://:splat"
-  status = 301
-  force = true
+  # Asegura que las dependencias de las funciones se instalen.
+  node_bundler = "esbuild"

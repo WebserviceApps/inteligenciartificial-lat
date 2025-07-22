@@ -10,7 +10,7 @@ exports.handler = async function(event) {
   try {
     const { name, email } = JSON.parse(event.body);
     const API_KEY = process.env.BREVO_API_KEY;
-    const LIST_ID = 123; // <-- ¡¡IMPORTANTE: REEMPLAZA 123 CON EL ID DE TU LISTA!!
+    const LIST_ID = 3; // <-- ¡¡IMPORTANTE: REEMPLAZA 123 CON EL ID DE TU LISTA!!
 
     if (!name || !email || !API_KEY || !LIST_ID) {
       console.error("Faltan datos o configuración: ", { name, email, API_KEY_exists: !!API_KEY, LIST_ID });

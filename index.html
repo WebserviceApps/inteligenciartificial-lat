@@ -24,13 +24,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Serif+Pro:wght@700;900&display=swap" rel="stylesheet">
 
+    <!-- SDK de Contentful -->
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
-
+    
+    <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5HJLWXD6');</script>
+    <!-- End Google Tag Manager -->
+
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #020617; color: #E0E7FF; }
         h1, h2 { font-family: 'Source Serif Pro', serif; }
@@ -54,8 +58,11 @@
 </head>
 <body class="antialiased">
 
+    <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5HJLWXD6"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <header class="fixed top-0 left-0 w-full p-4 z-50">
         <div class="container mx-auto flex justify-end">
             <div class="relative">
@@ -281,11 +288,11 @@
         </div>
     </footer>
 
-   <script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGICA DE CONTENTFUL CON DEPURACIÓN ---
             const CONTENTFUL_SPACE_ID = 'xmg0akvdqvvq';
             const CONTENTFUL_ACCESS_TOKEN = 'AGNXICM0JNLOsMHVqBCVxAPPXLQrO9zBVHbIzk1bVQI';
+            const CONTENTFUL_ENTRY_ID = '7eE4qilyVBnYrLSIGXimkE'; // ID de la entrada específica
 
             const client = contentful.createClient({
                 space: CONTENTFUL_SPACE_ID,
@@ -295,18 +302,17 @@
             let translations = {}; 
 
             async function fetchContentfulData() {
-                console.log("Iniciando conexión con Contentful...");
+                console.log("Iniciando conexión con Contentful para la entrada específica...");
                 try {
-                    const response = await client.getEntries({ content_type: 'paginaPrincipal' });
+                    const entry = await client.getEntry(CONTENTFUL_ENTRY_ID);
                     
-                    // -- NUEVA LÍNEA DE DEPURACIÓN --
-                    console.log("Respuesta de la API de Contentful:", response); 
+                    console.log("Respuesta de la API de Contentful:", entry); 
                     
-                    if (!response.items || response.items.length === 0) {
-                        throw new Error("No se encontró ninguna entrada para el content_type 'paginaPrincipal'. Verifica el API Identifier en Contentful.");
+                    if (!entry || !entry.fields) {
+                        throw new Error("No se encontró la entrada o no tiene campos. ID de Entrada: " + CONTENTFUL_ENTRY_ID);
                     }
 
-                    const fields = response.items[0].fields;
+                    const fields = entry.fields;
                     const transformed = { es: {}, en: {}, pt: {} };
 
                     for (const key in fields) {
@@ -323,7 +329,6 @@
                 }
             }
             
-            // --- LÓGICA EXISTENTE ADAPTADA ---
             const langSelectorButton = document.getElementById('lang-selector-button');
             const langSelectorDropdown = document.getElementById('lang-selector-dropdown');
             const currentLangText = document.getElementById('current-lang-text');
@@ -337,7 +342,13 @@
                     document.querySelectorAll('[data-lang-key]').forEach(el => {
                         const key = el.dataset.langKey;
                         if (translations[lang][key]) {
-                            el.innerHTML = translations[lang][key];
+                            // Para Rich Text (thesisBody), Contentful devuelve un objeto complejo.
+                            // Necesitamos convertirlo a HTML.
+                            if (key === 'thesisBody' && typeof translations[lang][key] === 'object') {
+                                el.innerHTML = contentful.richTextFromDocument(translations[lang][key]);
+                            } else {
+                                el.innerHTML = translations[lang][key];
+                            }
                         }
                     });
                 }
@@ -358,7 +369,6 @@
                 const initialLang = ['es', 'en', 'pt'].includes(userLang) ? userLang : 'es';
                 setLanguage(initialLang);
                 
-                // --- CÓDIGO RESTAURADO PARA ANIMACIONES Y FORMULARIO ---
                 const canvas = document.getElementById('hero-canvas');
                 const ctx = canvas.getContext('2d');
                 canvas.width = window.innerWidth;
@@ -468,4 +478,3 @@
     </script>
 </body>
 </html>
-   

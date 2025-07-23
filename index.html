@@ -289,192 +289,200 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const CONTENTFUL_SPACE_ID = 'xmg0akvdqvvq';
-            const CONTENTFUL_ACCESS_TOKEN = 'AGNXICM0JNLOsMHVqBCVxAPPXLQrO9zBVHbIzk1bVQI';
-            const CONTENTFUL_ENTRY_ID = '7eE4qilyVBnYrLSIGXimkE'; // ID de la entrada específica
+    document.addEventListener('DOMContentLoaded', () => {
+        const CONTENTFUL_SPACE_ID = 'xmg0akvdqvvq';
+        const CONTENTFUL_ACCESS_TOKEN = 'AGNXICM0JNLOsMHVqBCVxAPPXLQrO9zBVHbIzk1bVQI';
+        const CONTENTFUL_ENTRY_ID = '7eE4qilyVBnYrLSIGXimkE';
 
-            const client = contentful.createClient({
-                space: CONTENTFUL_SPACE_ID,
-                accessToken: CONTENTFUL_ACCESS_TOKEN,
-            });
+        const client = contentful.createClient({
+            space: CONTENTFUL_SPACE_ID,
+            accessToken: CONTENTFUL_ACCESS_TOKEN,
+        });
 
-            let translations = {}; 
+        let translations = {};
 
-            async function fetchContentfulData() {
-                console.log("Iniciando conexión con Contentful para la entrada específica...");
-                try {
-                    const entry = await client.getEntry(CONTENTFUL_ENTRY_ID);
-                    
-                    console.log("Respuesta de la API de Contentful:", entry); 
-                    
-                    if (!entry || !entry.fields) {
-                        throw new Error("No se encontró la entrada o no tiene campos. ID de Entrada: " + CONTENTFUL_ENTRY_ID);
-                    }
+        async function fetchContentfulData() {
+            console.log("Iniciando conexión con Contentful...");
+            try {
+                const entry = await client.getEntry(CONTENTFUL_ENTRY_ID);
+                console.log("Respuesta de la API de Contentful:", entry);
 
-                    const fields = entry.fields;
-                    const transformed = { es: {}, en: {}, pt: {} };
+                if (!entry || !entry.fields) {
+                    throw new Error("La entrada de Contentful no fue encontrada o está vacía. ID: " + CONTENTFUL_ENTRY_ID);
+                }
 
-                    for (const key in fields) {
+                const fields = entry.fields;
+                console.log("Campos recibidos:", fields);
+                
+                const transformed = { es: {}, en: {}, pt: {} };
+
+                for (const key in fields) {
+                    if (fields[key] && typeof fields[key] === 'object') {
                         if (fields[key]['es']) transformed.es[key] = fields[key]['es'];
                         if (fields[key]['en-US']) transformed.en[key] = fields[key]['en-US'];
                         if (fields[key]['pt']) transformed.pt[key] = fields[key]['pt'];
                     }
-                    
-                    translations = transformed;
-                    initializePage();
-
-                } catch (error) {
-                    console.error("Error detallado al obtener el contenido de Contentful:", error);
                 }
+                
+                console.log("Contenido transformado:", transformed);
+                translations = transformed;
+                initializePage();
+
+            } catch (error) {
+                console.error("Error detallado al obtener el contenido de Contentful:", error);
             }
-            
-            const langSelectorButton = document.getElementById('lang-selector-button');
-            const langSelectorDropdown = document.getElementById('lang-selector-dropdown');
-            const currentLangText = document.getElementById('current-lang-text');
+        }
+        
+        const langSelectorButton = document.getElementById('lang-selector-button');
+        const langSelectorDropdown = document.getElementById('lang-selector-dropdown');
+        const currentLangText = document.getElementById('current-lang-text');
 
-            const setLanguage = (lang) => {
-                const langMap = { es: 'Español', en: 'English', pt: 'Português' };
-                document.documentElement.lang = lang;
+        const setLanguage = (lang) => {
+            const langMap = { es: 'Español', en: 'English', pt: 'Português' };
+            document.documentElement.lang = lang;
 
-                if (translations[lang]) {
-                    currentLangText.innerText = langMap[lang];
-                    document.querySelectorAll('[data-lang-key]').forEach(el => {
-                        const key = el.dataset.langKey;
-                        if (translations[lang][key]) {
-                            // Para Rich Text (thesisBody), Contentful devuelve un objeto complejo.
-                            // Necesitamos convertirlo a HTML.
-                            if (key === 'thesisBody' && typeof translations[lang][key] === 'object') {
-                                el.innerHTML = contentful.richTextFromDocument(translations[lang][key]);
-                            } else {
-                                el.innerHTML = translations[lang][key];
-                            }
-                        }
-                    });
-                }
-                
-                langSelectorDropdown.classList.add('hidden');
-            };
-            
-            function initializePage() {
-                langSelectorButton.addEventListener('click', () => langSelectorDropdown.classList.toggle('hidden'));
-                document.querySelectorAll('.lang-option').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        setLanguage(e.target.dataset.lang);
-                    });
-                });
+            if (translations[lang]) {
+                currentLangText.innerText = langMap[lang] || 'Language';
 
-                const userLang = navigator.language.split('-')[0] || 'es';
-                const initialLang = ['es', 'en', 'pt'].includes(userLang) ? userLang : 'es';
-                setLanguage(initialLang);
-                
-                const canvas = document.getElementById('hero-canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                let particlesArray;
-                const mouse = { x: null, y: null, radius: (canvas.height/110) * (canvas.width/110) };
-                window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
-                window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; mouse.radius = (canvas.height/110) * (canvas.width/110); initParticles(); });
-                window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
-                class Particle { constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = 'rgba(59, 130, 246, 0.5)'; ctx.fill(); } update() { if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; } if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; } let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx*dx + dy*dy); if (distance < mouse.radius + this.size){ if(mouse.x < this.x && this.x < canvas.width - this.size * 10){ this.x += 5; } if(mouse.x > this.x && this.x > this.size * 10){ this.x -= 5; } if(mouse.y < this.y && this.y < canvas.height - this.size * 10){ this.y += 5; } if(mouse.y > this.y && this.y > this.size * 10){ this.y -= 5; } } this.x += this.directionX; this.y += this.directionY; this.draw(); } }
-                function initParticles() { particlesArray = []; let numberOfParticles = (canvas.height * canvas.width) / 9000; for (let i=0; i < numberOfParticles; i++) { let size = (Math.random() * 2) + 1; let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2); let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2); let directionX = (Math.random() * .4) - .2; let directionY = (Math.random() * .4) - .2; particlesArray.push(new Particle(x, y, directionX, directionY, size, 'rgba(59, 130, 246, 0.5)')); } }
-                function animateParticles() { requestAnimationFrame(animateParticles); ctx.clearRect(0,0,innerWidth, innerHeight); for (let i=0; i < particlesArray.length; i++) { particlesArray[i].update(); } connectParticles(); }
-                function connectParticles(){ let opacityValue = 1; for(let a = 0; a < particlesArray.length; a++){ for(let b = a; b < particlesArray.length; b++){ let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y)); if(distance < (canvas.width/7) * (canvas.height/7)){ opacityValue = 1 - (distance/20000); ctx.strokeStyle = `rgba(59, 130, 246, ${opacityValue})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke(); } } } }
-                initParticles();
-                animateParticles();
-
-                const counters = document.querySelectorAll('.metric-card [data-target]');
-                const speed = 200; 
-                const animateCount = (counter) => {
-                    const target = +counter.dataset.target;
-                    const isFloat = String(target).includes('.');
-                    const updateCount = () => {
-                        const countText = (counter.innerText || '0').replace('%', '');
-                        const count = +countText;
-                        const inc = target / speed;
-                        if (count < target) {
-                            let newCount = count + inc;
-                            counter.innerText = isFloat ? newCount.toFixed(1) : Math.ceil(newCount);
-                            setTimeout(updateCount, 10);
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    const content = translations[lang][key];
+                    
+                    if (content) {
+                        if (key === 'thesisBody' && typeof content === 'object' && content.nodeType === 'document') {
+                            el.innerHTML = contentful.richTextFromDocument(content);
                         } else {
-                            counter.innerText = isFloat ? target.toFixed(1) : target;
+                            el.textContent = content;
                         }
-                    };
-                    updateCount();
-                };
-                const observer = new IntersectionObserver((entries, observer) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const elementToAnimate = entry.target;
-                            animateCount(elementToAnimate);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.8 });
-                counters.forEach(counter => {
-                    observer.observe(counter);
-                });
-                
-                const form = document.getElementById('contact-form');
-                const submitButton = document.getElementById('submit-button');
-                const formResponse = document.getElementById('form-response');
-
-                form.addEventListener('submit', async (event) => {
-                    event.preventDefault();
-                    submitButton.disabled = true;
-                    const currentLang = document.documentElement.lang || 'es';
-                    const sendingText = { es: 'Enviando...', en: 'Sending...', pt: 'Enviando...' }[currentLang];
-                    submitButton.textContent = sendingText;
-
-                    const formData = new FormData(form);
-                    const data = { name: formData.get('name'), email: formData.get('email') };
-
-                    try {
-                        const response = await fetch('/.netlify/functions/submit-brevo', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-                        
-                        if (!response.ok) {
-                            const errorBody = await response.text();
-                            throw new Error(`Error del servidor: ${response.status} ${response.statusText}. Detalles: ${errorBody}`);
-                        }
-                        
-                        const successMessage = {
-                            es: '¡Gracias! Hemos recibido su solicitud. Nos pondremos en contacto con usted en breve.',
-                            en: 'Thank you! We have received your request. We will contact you shortly.',
-                            pt: 'Obrigado! Recebemos sua solicitação. Entraremos em contato em breve.'
-                        }[currentLang];
-
-                        formResponse.textContent = successMessage;
-                        formResponse.className = 'block p-4 mb-4 text-sm rounded-lg bg-green-900 text-green-300';
-                        form.reset();
-                        formResponse.classList.remove('hidden');
-
-                    } catch (error) {
-                        console.error('Error detallado en el envío del formulario:', error);
-                        const errorMessage = {
-                            es: 'Hubo un error al enviar su solicitud. Por favor, inténtelo de nuevo más tarde.',
-                            en: 'There was an error sending your request. Please try again later.',
-                            pt: 'Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente más tarde.'
-                        }[currentLang];
-                        formResponse.textContent = errorMessage;
-                        formResponse.className = 'block p-4 mb-4 text-sm rounded-lg bg-red-900 text-red-300';
-                        formResponse.classList.remove('hidden');
-                    } finally {
-                        submitButton.disabled = false;
-                        if (translations[currentLang] && translations[currentLang].formButton) {
-                            submitButton.innerText = translations[currentLang].formButton;
-                        }
+                    } else {
+                         // Deja el contenido por defecto o límpialo si no hay traducción
+                         // el.textContent = ''; 
                     }
                 });
             }
+            
+            langSelectorDropdown.classList.add('hidden');
+        };
+        
+        function initializePage() {
+            langSelectorButton.addEventListener('click', () => langSelectorDropdown.classList.toggle('hidden'));
+            document.querySelectorAll('.lang-option').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setLanguage(e.target.dataset.lang);
+                });
+            });
 
-            fetchContentfulData();
-        });
-    </script>
+            const userLang = navigator.language.split('-')[0] || 'es';
+            const initialLang = ['es', 'en', 'pt'].includes(userLang) ? userLang : 'es';
+            setLanguage(initialLang);
+            
+            // --- CÓDIGO RESTAURADO PARA ANIMACIONES Y FORMULARIO ---
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particlesArray;
+            const mouse = { x: null, y: null, radius: (canvas.height/110) * (canvas.width/110) };
+            window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; });
+            window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; mouse.radius = (canvas.height/110) * (canvas.width/110); initParticles(); });
+            window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
+            class Particle { constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = 'rgba(59, 130, 246, 0.5)'; ctx.fill(); } update() { if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; } if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; } let dx = mouse.x - this.x; let dy = mouse.y - this.y; let distance = Math.sqrt(dx*dx + dy*dy); if (distance < mouse.radius + this.size){ if(mouse.x < this.x && this.x < canvas.width - this.size * 10){ this.x += 5; } if(mouse.x > this.x && this.x > this.size * 10){ this.x -= 5; } if(mouse.y < this.y && this.y < canvas.height - this.size * 10){ this.y += 5; } if(mouse.y > this.y && this.y > this.size * 10){ this.y -= 5; } } this.x += this.directionX; this.y += this.directionY; this.draw(); } }
+            function initParticles() { particlesArray = []; let numberOfParticles = (canvas.height * canvas.width) / 9000; for (let i=0; i < numberOfParticles; i++) { let size = (Math.random() * 2) + 1; let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2); let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2); let directionX = (Math.random() * .4) - .2; let directionY = (Math.random() * .4) - .2; particlesArray.push(new Particle(x, y, directionX, directionY, size, 'rgba(59, 130, 246, 0.5)')); } }
+            function animateParticles() { requestAnimationFrame(animateParticles); ctx.clearRect(0,0,innerWidth, innerHeight); for (let i=0; i < particlesArray.length; i++) { particlesArray[i].update(); } connectParticles(); }
+            function connectParticles(){ let opacityValue = 1; for(let a = 0; a < particlesArray.length; a++){ for(let b = a; b < particlesArray.length; b++){ let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y)); if(distance < (canvas.width/7) * (canvas.height/7)){ opacityValue = 1 - (distance/20000); ctx.strokeStyle = `rgba(59, 130, 246, ${opacityValue})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y); ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke(); } } } }
+            initParticles();
+            animateParticles();
+
+            const counters = document.querySelectorAll('.metric-card [data-target]');
+            const speed = 200; 
+            const animateCount = (counter) => {
+                const target = +counter.dataset.target;
+                const isFloat = String(target).includes('.');
+                const updateCount = () => {
+                    const countText = (counter.innerText || '0').replace('%', '');
+                    const count = +countText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        let newCount = count + inc;
+                        counter.innerText = isFloat ? newCount.toFixed(1) : Math.ceil(newCount);
+                        setTimeout(updateCount, 10);
+                    } else {
+                        counter.innerText = isFloat ? target.toFixed(1) : target;
+                    }
+                };
+                updateCount();
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const elementToAnimate = entry.target;
+                        animateCount(elementToAnimate);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.8 });
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+            
+            const form = document.getElementById('contact-form');
+            const submitButton = document.getElementById('submit-button');
+            const formResponse = document.getElementById('form-response');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                submitButton.disabled = true;
+                const currentLang = document.documentElement.lang || 'es';
+                const sendingText = { es: 'Enviando...', en: 'Sending...', pt: 'Enviando...' }[currentLang];
+                submitButton.textContent = sendingText;
+
+                const formData = new FormData(form);
+                const data = { name: formData.get('name'), email: formData.get('email') };
+
+                try {
+                    const response = await fetch('/.netlify/functions/submit-brevo', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (!response.ok) {
+                        const errorBody = await response.text();
+                        throw new Error(`Error del servidor: ${response.status} ${response.statusText}. Detalles: ${errorBody}`);
+                    }
+                    
+                    const successMessage = {
+                        es: '¡Gracias! Hemos recibido su solicitud. Nos pondremos en contacto con usted en breve.',
+                        en: 'Thank you! We have received your request. We will contact you shortly.',
+                        pt: 'Obrigado! Recebemos sua solicitação. Entraremos em contato em breve.'
+                    }[currentLang];
+
+                    formResponse.textContent = successMessage;
+                    formResponse.className = 'block p-4 mb-4 text-sm rounded-lg bg-green-900 text-green-300';
+                    form.reset();
+                    formResponse.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error('Error detallado en el envío del formulario:', error);
+                    const errorMessage = {
+                        es: 'Hubo un error al enviar su solicitud. Por favor, inténtelo de nuevo más tarde.',
+                        en: 'There was an error sending your request. Please try again later.',
+                        pt: 'Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente más tarde.'
+                    }[currentLang];
+                    formResponse.textContent = errorMessage;
+                    formResponse.className = 'block p-4 mb-4 text-sm rounded-lg bg-red-900 text-red-300';
+                    formResponse.classList.remove('hidden');
+                } finally {
+                    submitButton.disabled = false;
+                    if (translations[currentLang] && translations[currentLang].formButton) {
+                        submitButton.innerText = translations[currentLang].formButton;
+                    }
+                }
+            });
+        }
+        fetchContentfulData();
+    });
+</script>
 </body>
 </html>

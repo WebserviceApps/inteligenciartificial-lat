@@ -54,6 +54,234 @@
     </style>
 </head>
 <body class="antialiased">
+
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5HJLWXD6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <header class="fixed top-0 left-0 w-full p-4 z-50">
+        <div class="container mx-auto flex justify-end">
+            <div class="relative">
+                <button id="lang-selector-button" class="flex items-center gap-2 px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-white hover:bg-slate-700/70 transition-colors">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
+                    <span id="current-lang-text">Español</span>
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </button>
+                <div id="lang-selector-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-slate-800 border border-slate-700 rounded-lg shadow-lg overflow-hidden">
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="es">Español</a>
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="en">English</a>
+                    <a href="#" class="lang-option block px-4 py-2 text-sm text-white hover:bg-blue-500" data-lang="pt">Português</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="hero" class="relative w-full min-h-screen flex flex-col items-center justify-center text-center p-4 bg-slate-950 overflow-hidden">
+        <canvas id="hero-canvas"></canvas>
+        <div class="relative z-20">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl tracking-tighter text-white">
+                inteligenciartificial.lat
+            </h1>
+            <h2 data-lang-key="heroSubtitle" class="mt-4 max-w-4xl mx-auto text-lg md:text-2xl font-semibold text-indigo-200"></h2>
+            <a href="#contact" data-lang-key="heroButton" class="mt-10 inline-block px-8 py-4 text-lg font-bold rounded-lg btn-primary shadow-lg shadow-blue-500/20 transform hover:scale-105 transition-transform duration-300"></a>
+        </div>
+    </section>
+
+    <section id="metrics" class="py-20 sm:py-24 bg-slate-900">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-8 rounded-xl info-card metric-card">
+                    <div class="flex justify-center items-center gap-x-3">
+                        <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                        <h3 data-lang-key="metric1Title" class="text-sm font-semibold uppercase tracking-widest text-blue-400"></h3>
+                    </div>
+                    <p class="mt-2 text-4xl lg:text-5xl font-bold text-white" data-target="154.2">0</p>
+                    <p data-lang-key="metric1Unit" class="text-base text-indigo-200"></p>
+                </div>
+                <div class="p-8 rounded-xl info-card metric-card">
+                    <div class="flex justify-center items-center gap-x-3">
+                        <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.63 2.25c-2.59 1.9-3.72 5.03-3.72 8.25 0 3.22 1.13 6.35 3.72 8.25a14.98 14.98 0 005.96-2.25z" /></svg>
+                        <h3 data-lang-key="metric2Title" class="text-sm font-semibold uppercase tracking-widest text-blue-400"></h3>
+                    </div>
+                    <p class="mt-2 text-4xl lg:text-5xl font-bold text-white"><span data-target="29.2">0</span>%</p>
+                    <p class="text-base text-indigo-200">(2023-2030)</p>
+                </div>
+                <div class="p-8 rounded-xl info-card metric-card">
+                    <div class="flex justify-center items-center gap-x-3">
+                        <svg class="w-6 h-6 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.282 2.72a3 3 0 01-4.682-2.72 9.094 9.094 0 013.741-.479m7.282 2.72a8.972 8.972 0 01-3.741-.479m3.741.479a4.5 4.5 0 01-4.242 0M12 12.75a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" /></svg>
+                        <h3 data-lang-key="metric3Title" class="text-sm font-semibold uppercase tracking-widest text-blue-400"></h3>
+                    </div>
+                    <p class="mt-2 text-4xl lg:text-5xl font-bold text-white"><span data-target="67">0</span>%</p>
+                    <p data-lang-key="metric3Unit" class="text-base text-indigo-200"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="thesis" class="py-20 sm:py-24">
+        <div class="container mx-auto px-6 lg:px-8 max-w-5xl relative z-10">
+            <div class="text-center">
+                <h2 data-lang-key="thesisTitle" class="text-3xl lg:text-4xl font-bold text-white"></h2>
+            </div>
+            <div data-lang-key="thesisBody" class="mt-12 text-lg lg:text-xl text-indigo-200 leading-relaxed space-y-6 lg:columns-2 lg:gap-12">
+            </div>
+        </div>
+    </section>
+
+    <section id="advisors" class="py-20 sm:py-24 bg-slate-900">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 data-lang-key="advisorsTitle" class="text-3xl lg:text-4xl font-bold text-white"></h2>
+                <p data-lang-key="advisorsSubtitle" class="mt-4 text-lg text-indigo-200"></p>
+            </div>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div class="flex flex-col items-center">
+                    <img class="h-32 w-32 rounded-full object-cover" src="images/asesor1.png" alt="Foto de Dr. Alejandro Vargas">
+                    <h3 data-lang-key="advisor1Name" class="mt-6 text-xl font-bold text-white"></h3>
+                    <p data-lang-key="advisor1Title" class="text-base text-blue-400"></p>
+                    <p data-lang-key="advisor1Bio" class="mt-2 text-sm text-indigo-200"></p>
+                    <div class="mt-4 flex items-center justify-center gap-x-4 opacity-60">
+                        <img src="images/logo-globant.png" alt="Logo Globant" class="h-6">
+                        <img src="images/logo-tech-ventures.png" alt="Logo Tech Ventures LATAM" class="h-6">
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img class="h-32 w-32 rounded-full object-cover" src="images/asesor2.png" alt="Foto de Mateo Costa">
+                    <h3 data-lang-key="advisor2Name" class="mt-6 text-xl font-bold text-white"></h3>
+                    <p data-lang-key="advisor2Title" class="text-base text-blue-400"></p>
+                    <p data-lang-key="advisor2Bio" class="mt-2 text-sm text-indigo-200"></p>
+                    <div class="mt-4 flex items-center justify-center gap-x-4 opacity-60">
+                        <img src="images/logo-nubank.png" alt="Logo Nubank" class="h-8">
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img class="h-32 w-32 rounded-full object-cover" src="images/asesor3.png" alt="Foto de Dra. Isabella Chen">
+                    <h3 data-lang-key="advisor3Name" class="mt-6 text-xl font-bold text-white"></h3>
+                    <p data-lang-key="advisor3Title" class="text-base text-blue-400"></p>
+                    <p data-lang-key="advisor3Bio" class="mt-2 text-sm text-indigo-200"></p>
+                    <div class="mt-4 flex items-center justify-center gap-x-4 opacity-60">
+                         <img src="images/logo-mit.png" alt="Logo MIT Media Lab" class="h-7">
+                         <img src="images/logo-oecd.png" alt="Logo OECD" class="h-7">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="models" class="py-20 sm:py-24">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 data-lang-key="modelsTitle" class="text-3xl lg:text-4xl font-bold text-white"></h2>
+                <p data-lang-key="modelsSubtitle" class="mt-4 text-lg text-indigo-200"></p>
+            </div>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 text-center rounded-xl info-card">
+                    <div class="flex justify-center mb-4"><svg class="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3H9m11 13v-2m-4.5 2v-2m-4.5 2v-2m-4.5 2v-2m18-7H5a2 2 0 00-2 2v5a2 2 0 002 2h14a2 2 0 002-2v-5a2 2 0 00-2-2z"></path></svg></div>
+                    <h3 data-lang-key="model1Title" class="text-xl font-bold text-white"></h3>
+                    <p data-lang-key="model1Desc" class="mt-2 text-indigo-200"></p>
+                </div>
+                <div class="p-8 text-center rounded-xl info-card">
+                    <div class="flex justify-center mb-4"><svg class="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"></path></svg></div>
+                    <h3 data-lang-key="model2Title" class="text-xl font-bold text-white"></h3>
+                    <p data-lang-key="model2Desc" class="mt-2 text-indigo-200"></p>
+                </div>
+                <div class="p-8 text-center rounded-xl info-card">
+                    <div class="flex justify-center mb-4"><svg class="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222 4 2.222V20M12 14L4 9l8-4 8 4-8 5z"></path></svg></div>
+                    <h3 data-lang-key="model3Title" class="text-xl font-bold text-white"></h3>
+                    <p data-lang-key="model3Desc" class="mt-2 text-indigo-200"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="py-20 sm:py-24 bg-slate-900">
+        <div class="container mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 data-lang-key="roadmapTitle" class="text-3xl lg:text-4xl font-bold text-white"></h2>
+                <p data-lang-key="roadmapSubtitle" class="mt-4 text-lg text-indigo-200"></p>
+            </div>
+            <div class="mt-16 max-w-5xl mx-auto">
+                <div class="timeline grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-16">
+                    <div class="timeline-milestone text-center px-4">
+                        <div class="pt-10">
+                            <h3 data-lang-key="roadmap1Title" class="text-xl font-bold text-white"></h3>
+                            <p data-lang-key="roadmap1Date" class="text-base font-semibold text-blue-400"></p>
+                            <p data-lang-key="roadmap1Desc" class="mt-2 text-sm text-indigo-200"></p>
+                        </div>
+                    </div>
+                    <div class="timeline-milestone text-center px-4">
+                        <div class="pt-10">
+                            <h3 data-lang-key="roadmap2Title" class="text-xl font-bold text-white"></h3>
+                            <p data-lang-key="roadmap2Date" class="text-base font-semibold text-blue-400"></p>
+                            <p data-lang-key="roadmap2Desc" class="mt-2 text-sm text-indigo-200"></p>
+                        </div>
+                    </div>
+                    <div class="timeline-milestone text-center px-4">
+                        <div class="pt-10">
+                            <h3 data-lang-key="roadmap3Title" class="text-xl font-bold text-white"></h3>
+                            <p data-lang-key="roadmap3Date" class="text-base font-semibold text-blue-400"></p>
+                            <p data-lang-key="roadmap3Desc" class="mt-2 text-sm text-indigo-200"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 sm:py-24">
+        <div class="container mx-auto px-6 lg:px-8 max-w-2xl">
+            <div class="text-center">
+                <h2 data-lang-key="formTitle" class="text-3xl lg:text-4xl font-bold text-white"></h2>
+                <p data-lang-key="formSubtitle" class="mt-4 text-lg text-indigo-200"></p>
+            </div>
+            <form id="contact-form" class="mt-12">
+                <div id="form-response" class="hidden p-4 mb-4 text-sm rounded-lg" role="alert"></div>
+                <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                    <div>
+                        <label for="name" data-lang-key="formName" class="block text-sm font-semibold leading-6 text-indigo-100">Nombre</label>
+                        <div class="mt-2.5">
+                            <input type="text" name="name" id="name" autocomplete="name" required class="block w-full rounded-md border-0 px-3.5 py-2 bg-slate-800 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" data-lang-key="formEmail" class="block text-sm font-semibold leading-6 text-indigo-100">Email</label>
+                        <div class="mt-2.5">
+                            <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md border-0 px-3.5 py-2 bg-slate-800 text-white shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10">
+                    <button id="submit-button" type="submit" data-lang-key="formButton" class="block w-full rounded-md btn-primary px-3.5 py-3.5 text-center text-base font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                        Solicitar Informe Confidencial
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section id="trust-logos" class="py-16 bg-slate-900">
+        <div class="container mx-auto px-6 lg:px-8">
+            <h3 data-lang-key="trustTitle" class="text-center text-sm font-semibold uppercase tracking-widest text-slate-400"></h3>
+            <div class="mt-8 flow-root">
+                <div class="mx-auto max-w-5xl grid grid-cols-2 sm:grid-cols-5 gap-y-8 gap-x-12 items-center">
+                    <div class="flex items-center justify-center"><img class="h-8" src="images/logo-statista.png" alt="Logo Statista"></div>
+                    <div class="flex items-center justify-center"><img class="h-10" src="images/logo-forbes.png" alt="Logo Forbes"></div>
+                    <div class="flex items-center justify-center"><img class="h-10" src="images/logo-gartner.png" alt="Logo Gartner"></div>
+                    <div class="flex items-center justify-center"><img class="h-12" src="images/logo-eclac.png" alt="Logo ECLAC/CEPAL"></div>
+                    <div class="flex items-center justify-center"><img class="h-9" src="images/logo-idc.png" alt="Logo IDC"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 border-t border-slate-800">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-400">
+            <p data-lang-key="footerRights" class="mb-4"></p>
+            <div class="flex justify-center gap-x-6">
+                <a href="terminos.html" data-lang-key="footerTerms" class="text-sm hover:text-white transition-colors"></a>
+                <a href="politica.html" data-lang-key="footerPolicy" class="text-sm hover:text-white transition-colors"></a>
+            </div>
+        </div>
+    </footer>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const CONTENTFUL_SPACE_ID = 'xmg0akvdqvvq';
@@ -65,16 +293,16 @@
                 accessToken: CONTENTFUL_ACCESS_TOKEN,
             });
 
-            let translations = {}; 
+            let translations = {};
 
             async function fetchContentfulData() {
+                console.log("Iniciando conexión con Contentful...");
                 try {
-                    console.log("Solicitando la entrada específica: " + CONTENTFUL_ENTRY_ID);
                     const entry = await client.getEntry(CONTENTFUL_ENTRY_ID);
-                    console.log("Respuesta de la API de Contentful RECIBIDA:", entry);
+                    console.log("Respuesta de la API de Contentful:", entry);
 
                     if (!entry || !entry.fields) {
-                        throw new Error("La entrada de Contentful fue encontrada pero no contiene campos (fields).");
+                        throw new Error("La entrada de Contentful no fue encontrada o está vacía. ID: " + CONTENTFUL_ENTRY_ID);
                     }
 
                     const fields = entry.fields;
@@ -89,12 +317,12 @@
                         }
                     }
                     
-                    console.log("Contenido transformado exitosamente:", transformed);
+                    console.log("Contenido transformado:", transformed);
                     translations = transformed;
                     initializePage();
 
                 } catch (error) {
-                    console.error("Error DETALLADO al obtener el contenido de Contentful:", error);
+                    console.error("Error detallado al obtener el contenido de Contentful:", error);
                     document.body.innerHTML = `<div style="color: white; padding: 40px; text-align: center; font-family: sans-serif;"><h1>Error de Carga</h1><p>No se pudo cargar el contenido desde el CMS. Por favor, revise la consola del navegador para ver los detalles del error.</p></div>`;
                 }
             }
@@ -118,7 +346,7 @@
                             if (key === 'thesisBody' && typeof content === 'object' && content.nodeType === 'document') {
                                 el.innerHTML = richTextHtmlRenderer.documentToHtmlString(content);
                             } else {
-                                el.innerHTML = content; // Usamos innerHTML para renderizar <br> o <strong> si es necesario
+                                el.textContent = content;
                             }
                         }
                     });
@@ -140,7 +368,6 @@
                 const initialLang = ['es', 'en', 'pt'].includes(userLang) ? userLang : 'es';
                 setLanguage(initialLang);
                 
-                // --- CÓDIGO RESTAURADO PARA ANIMACIONES Y FORMULARIO ---
                 const canvas = document.getElementById('hero-canvas');
                 if (canvas) {
                     const ctx = canvas.getContext('2d');

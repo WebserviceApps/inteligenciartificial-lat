@@ -283,6 +283,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA DE CONTENTFUL CON DEPURACIÓN ---
             const CONTENTFUL_SPACE_ID = 'xmg0akvdqvvq';
             const CONTENTFUL_ACCESS_TOKEN = 'AGNXICM0JNLOsMHVqBCVxAPPXLQrO9zBVHbIzk1bVQI';
 
@@ -294,11 +295,15 @@
             let translations = {}; 
 
             async function fetchContentfulData() {
+                console.log("Iniciando conexión con Contentful...");
                 try {
                     const response = await client.getEntries({ content_type: 'paginaPrincipal' });
                     
-                    if (!response.items.length) {
-                        throw new Error("No se encontró la entrada 'Página Principal' en Contentful.");
+                    // -- NUEVA LÍNEA DE DEPURACIÓN --
+                    console.log("Respuesta de la API de Contentful:", response); 
+                    
+                    if (!response.items || response.items.length === 0) {
+                        throw new Error("No se encontró ninguna entrada para el content_type 'paginaPrincipal'. Verifica el API Identifier en Contentful.");
                     }
 
                     const fields = response.items[0].fields;
@@ -314,10 +319,11 @@
                     initializePage();
 
                 } catch (error) {
-                    console.error("Error al obtener el contenido de Contentful:", error);
+                    console.error("Error detallado al obtener el contenido de Contentful:", error);
                 }
             }
             
+            // --- LÓGICA EXISTENTE ADAPTADA ---
             const langSelectorButton = document.getElementById('lang-selector-button');
             const langSelectorDropdown = document.getElementById('lang-selector-dropdown');
             const currentLangText = document.getElementById('current-lang-text');
@@ -328,7 +334,6 @@
 
                 if (translations[lang]) {
                     currentLangText.innerText = langMap[lang];
-
                     document.querySelectorAll('[data-lang-key]').forEach(el => {
                         const key = el.dataset.langKey;
                         if (translations[lang][key]) {
@@ -354,8 +359,6 @@
                 setLanguage(initialLang);
                 
                 // --- CÓDIGO RESTAURADO PARA ANIMACIONES Y FORMULARIO ---
-
-                // Animación de partículas
                 const canvas = document.getElementById('hero-canvas');
                 const ctx = canvas.getContext('2d');
                 canvas.width = window.innerWidth;
@@ -372,7 +375,6 @@
                 initParticles();
                 animateParticles();
 
-                // Animación de contadores
                 const counters = document.querySelectorAll('.metric-card [data-target]');
                 const speed = 200; 
                 const animateCount = (counter) => {
@@ -405,7 +407,6 @@
                     observer.observe(counter);
                 });
                 
-                // Lógica del formulario
                 const form = document.getElementById('contact-form');
                 const submitButton = document.getElementById('submit-button');
                 const formResponse = document.getElementById('form-response');
@@ -448,14 +449,14 @@
                         const errorMessage = {
                             es: 'Hubo un error al enviar su solicitud. Por favor, inténtelo de nuevo más tarde.',
                             en: 'There was an error sending your request. Please try again later.',
-                            pt: 'Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente mais tarde.'
+                            pt: 'Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente más tarde.'
                         }[currentLang];
                         formResponse.textContent = errorMessage;
                         formResponse.className = 'block p-4 mb-4 text-sm rounded-lg bg-red-900 text-red-300';
                         formResponse.classList.remove('hidden');
                     } finally {
                         submitButton.disabled = false;
-                        if (translations[currentLang]) {
+                        if (translations[currentLang] && translations[currentLang].formButton) {
                             submitButton.innerText = translations[currentLang].formButton;
                         }
                     }
@@ -465,5 +466,7 @@
             fetchContentfulData();
         });
     </script>
+</body>
+</html>
 </body>
 </html>

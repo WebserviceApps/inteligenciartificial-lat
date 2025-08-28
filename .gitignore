@@ -1,0 +1,19 @@
+# Dependencias
+node_modules/
+
+# Archivos de compilación y producción
+dist/
+build/
+.netlify/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos de entorno (contienen claves secretas)
+.env
+.env.local
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
